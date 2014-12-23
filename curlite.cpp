@@ -95,7 +95,7 @@ namespace curlite
 
         static curl_socket_t openSocket( void *userPtr, curlsocktype purpose, curl_sockaddr *address );
         static int closeSocket( void *userPtr, curl_socket_t socket );
-		static int sockOpt( void *userPtr, curl_socket_t socket, curlsocktype purpose );
+        static int sockOpt( void *userPtr, curl_socket_t socket, curlsocktype purpose );
 
         static CURLcode sslContext( CURL *curl, void *sslCtx, void *userPtr );
         static int debug( CURL *, curl_infotype type, char *data, size_t size, void *userPtr );
@@ -268,7 +268,7 @@ namespace curlite
         return 1;
     }
 
-	int Easy::Pimpl::sockOpt( void *userPtr, curl_socket_t socket, curlsocktype purpose )
+    int Easy::Pimpl::sockOpt( void *userPtr, curl_socket_t socket, curlsocktype purpose )
     {
         if( auto impl = reinterpret_cast<Easy::Pimpl*>( userPtr ) )
         {
