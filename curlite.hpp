@@ -256,11 +256,13 @@ namespace curlite
     struct OptionInvalidCode     { enum { value = -1 }; };
     struct OptionNullPtrCode     { enum { value = -2 }; };
     struct OptionLongCode        { enum { value = CURLOPTTYPE_LONG }; };
+    struct OptionOffsetCode      { enum { value = CURLOPTTYPE_OFF_T }; };
     struct OptionObjectPtrCode   { enum { value = CURLOPTTYPE_OBJECTPOINT }; };
     struct OptionFunctionPtrCode { enum { value = CURLOPTTYPE_FUNCTIONPOINT }; };
 
     template <class Type> struct OptionTypeCode                  : OptionInvalidCode { };
     template <> struct OptionTypeCode<long>                      : OptionLongCode { };
+    template <> struct OptionTypeCode<curl_off_t>                : OptionOffsetCode { };
     template <> struct OptionTypeCode<void*>                     : OptionObjectPtrCode { };
     template <> struct OptionTypeCode<char*>                     : OptionObjectPtrCode { };
     template <> struct OptionTypeCode<const char*>               : OptionObjectPtrCode { };
