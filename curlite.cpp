@@ -379,7 +379,10 @@ namespace curlite
     CURL *Easy::release()
     {
         CURL *curl = nullptr;
-        std::swap( _impl->curl, curl );
+        if( _impl ) {
+            std::swap( _impl->curl, curl );
+        }
+
         return curl;
     }
 
@@ -841,14 +844,49 @@ namespace curlite
         return curl_version_info( type );
     }
 
-    bool download( std::string url, std::ostream &ostr, bool followRedirect, bool throwExceptions )
+    Easy download( std::string const &url, std::ostream &ostr, bool followRedirect, bool throwExceptions )
     {
         Easy c;
         c.setExceptionMode( throwExceptions );
-        c.set( CURLOPT_URL, url.c_str() );
+        c.set( CURLOPT_URL, url );
         c.set( CURLOPT_FOLLOWLOCATION, followRedirect );
 
-        return c >> ostr;
+        c >> ostr;
+
+        return std::move( c );
+    }
+
+    Easy upload( std::istream &istr,
+                 std::string const &url,
+                 std::string const &username,
+                 std::string const &password,
+                 curl_off_t size,
+                 bool throwExceptions )
+    {
+        Easy c;
+        c.setExceptionMode( throwExceptions );
+        c.set( CURLOPT_URL, url );
+        c.set( CURLOPT_USERNAME, username );
+        c.set( CURLOPT_PASSWORD, password );
+        c.set( CURLOPT_INFILESIZE_LARGE, size );
+        c.set( CURLOPT_UPLOAD, true );
+
+        if( size == -1 ) {
+
+            List headers;
+            headers << "Transfer-Encoding: chunked";
+            headers << "Expect:";
+
+            // if it's not http(s) upload then the option will be ignored
+            c.set( CURLOPT_HTTPHEADER, headers.get() );
+        }
+
+        istr >> c;
+
+        // reset the option to avoid access violation (if a client reuses the Easy object)
+        c.set( CURLOPT_HTTPHEADER, nullptr );
+
+        return std::move( c );
     }
 
 } // end of namespace <curlite>

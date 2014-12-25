@@ -164,6 +164,10 @@ namespace curlite
         template <class ValueType>
         bool set( CURLoption opt, ValueType value );
 
+        bool set( CURLoption key, int value );
+        bool set( CURLoption key, bool value );
+        bool set( CURLoption key, std::string const &value );
+
         /* Request internal information from cURL session
          * See curl_easy_getinfo() for details.
          */
@@ -307,19 +311,16 @@ namespace curlite
         return handleError( err );
     }
 
-    template <>
     inline bool Easy::set( CURLoption key, int value )
     {
         return set( key, static_cast<long>( value ) );
     }
 
-    template <>
     inline bool Easy::set( CURLoption key, bool value )
     {
         return set( key, static_cast<long>( value ) );
     }
 
-    template <>
     inline bool Easy::set( CURLoption key, std::string const &value )
     {
         return set( key, value.c_str() );
@@ -376,8 +377,7 @@ namespace curlite
         List( List const &other );
         void operator = ( List const &other );
     public:
-
-        List( curl_slist *list );
+        List( curl_slist *list = nullptr );
         List( std::vector<std::string> const &values );
         List( List &&other );
 
@@ -486,7 +486,25 @@ namespace curlite
      *     followRedirect     internally sets CURLOPT_FOLLOWLOCATION option to 1, if true
      */
 
-    bool download( std::string url, std::ostream &ostr, bool followRedirect = true, bool throwExceptions = false );
+    Easy download( std::string const &url, std::ostream &ostr, bool followRedirect = true, bool throwExceptions = true );
+
+    /* Upload resource to a particular URL
+     *
+     *     istr               stream to read the resource data from
+     *     url                url to upload input stream to
+     *     username           username to use in authentication
+     *     password           password to use in authentication
+     *     size               total size of the upload (if known)
+     */
+
+    Easy upload( std::istream &istr,
+                 std::string const &url,
+                 std::string const &username = "",
+                 std::string const &password = "",
+                 curl_off_t size = -1,
+                 bool throwExceptions = true );
+
+
 
 } // end of namespace
 
