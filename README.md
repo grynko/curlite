@@ -4,6 +4,7 @@
 + Support of C++11 features
 + Type safety of curl options
 + Ease-of-use
++ No external dependencies (except *libcurl*)
 
 The project is in development stage. Currently only `Easy` interface is implemented. 
 
