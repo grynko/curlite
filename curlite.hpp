@@ -266,7 +266,6 @@ namespace curlite
 
     template <class Type> struct OptionTypeCode                  : OptionInvalidCode { };
     template <> struct OptionTypeCode<long>                      : OptionLongCode { };
-    template <> struct OptionTypeCode<curl_off_t>                : OptionOffsetCode { };
     template <> struct OptionTypeCode<void*>                     : OptionObjectPtrCode { };
     template <> struct OptionTypeCode<char*>                     : OptionObjectPtrCode { };
     template <> struct OptionTypeCode<const char*>               : OptionObjectPtrCode { };
@@ -289,6 +288,9 @@ namespace curlite
     template <> struct OptionTypeCode<curl_ssl_ctx_callback>     : OptionFunctionPtrCode { };
     template <> struct OptionTypeCode<curl_formget_callback>     : OptionFunctionPtrCode { };
     template <> struct OptionTypeCode<std::nullptr_t>            : OptionNullPtrCode { };
+    // disable specialization if curl_off_t and long is the same
+    template <> struct OptionTypeCode<std::conditional<std::is_same<long, curl_off_t>::value, void, curl_off_t>::type> : OptionOffsetCode { };
+
 
     template <class ValueType>
     bool Easy::set( CURLoption key, ValueType value )
