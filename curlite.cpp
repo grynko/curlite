@@ -871,9 +871,8 @@ namespace curlite
         c.set( CURLOPT_INFILESIZE_LARGE, size );
         c.set( CURLOPT_UPLOAD, true );
 
+        List headers;
         if( size == -1 ) {
-
-            List headers;
             headers << "Transfer-Encoding: chunked";
             headers << "Expect:";
 
