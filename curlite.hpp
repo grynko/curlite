@@ -295,7 +295,7 @@ namespace curlite
     template <class ValueType>
     bool Easy::set( CURLoption key, ValueType value )
     {
-        static_assert( OptionTypeCode<ValueType>::value != OptionInvalidCode::value, "the type is not supported by curl_easy_setopt" );
+        static_assert( int(OptionTypeCode<ValueType>::value) != int(OptionInvalidCode::value), "the type is not supported by curl_easy_setopt" );
 
         auto err = CURLE_OK;
 
