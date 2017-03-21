@@ -1,4 +1,4 @@
-#Curlite
+# Curlite
 *Curlite* is developed as a lightweight wrapper over *[cURL] (http://curl.haxx.se/libcurl/)* library with the following points in mind:
 
 + Support of C++11 features
@@ -8,9 +8,9 @@
 
 The project is in development stage. Currently only `Easy` interface is implemented. 
 
-##Examples
+## Examples
 
-###Example 1. Write web page source to stdout
+### Example 1. Write web page source to stdout
 ~~~cpp
 try
 {
@@ -38,7 +38,7 @@ catch( std::exception &e ) {
 }
 ~~~
 
-###Example 2. Upload file to remote FTP server and show transfer time
+### Example 2. Upload file to remote FTP server and show transfer time
 
 ~~~cpp
 try
@@ -80,22 +80,22 @@ catch( std::exception &e ) {
 }
 ~~~
 
-##FAQ
+## FAQ
 
-###What is minimum supported *libcurl* version?
+### What is minimum supported *libcurl* version?
 Curlite should work with libcurl 7.32 and later.
 
-###What compilers are supported?
+### What compilers are supported?
 Curlite requires from compiler a basic support of *C++11*. The minimum supported version are: *g++ 4.6*, *clang 3.2*, *VS 2010* and later.
 
-###What is the difference between `Easy::onWrite()` and `Easy::onWrite_()`?
+### What is the difference between `Easy::onWrite()` and `Easy::onWrite_()`?
 
 The latter (with underscore) sets simplified handler, while the first sets usual *cURL* handler.
 
-###Are *curlite* objects thread-safe?
+### Are *curlite* objects thread-safe?
 No, they are not.
 
-###Why the hell would anyone use *libcurl*, when there is *Qt* / *POCO* / *cpp-netlib* / *urdl* / ...
+### Why the hell would anyone use *libcurl*, when there is *Qt* / *POCO* / *cpp-netlib* / *urdl* / ...
 
 I like those libraries, but in some cases *libcurl* is the best choice: it's easy, stable and supports a huge number of protocols.
 Download via HTTPS? - ok. Send email? - no problem.
