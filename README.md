@@ -1,5 +1,5 @@
 # Curlite
-*Curlite* is developed as a lightweight wrapper over *[cURL] (http://curl.haxx.se/libcurl/)* library with the following points in mind:
+*Curlite* is developed as a lightweight wrapper over *[cURL](http://curl.haxx.se/libcurl/)* library with the following points in mind:
 
 + Support of C++11 features
 + Type safety of curl options
