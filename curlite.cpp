@@ -695,6 +695,7 @@ namespace curlite
     }
 
     List::List( std::vector<std::string> const &values )
+        : _list( nullptr )
     {
         append( values );
     }
